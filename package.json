@@ -16,6 +16,7 @@
   "type": "module",
   "dependencies": {
     "firebase": "^8.6.1",
+    "firebase-admin": "^9.8.0",
     "sveltestrap": "^5.0.2"
   }
 }
