@@ -2,15 +2,16 @@ import firebaseConfig from "./env";
 import type firebase from "firebase/app";
 
 let db: firebase.firestore.Firestore = null;
-let called = false;
+let started = false;
 
 export async function initFirebase() {
   // can only be called once.
-  if (called) {
+  if (started) {
     return;
   }
-  called = true;
+  started = true;
   if (typeof window !== "undefined") {
+    // You need to use firebase/app for the client side
     const fb: any = (await import("firebase/app")).default;
     await import("firebase/auth");
     await import("firebase/firestore");
