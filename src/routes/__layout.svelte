@@ -4,11 +4,10 @@
   import "firebase/auth";
   import { onMount } from "svelte";
   import authStore from "../stores/authStore";
-  import { firestore, initFirebase } from "../firestore";
+  import { initFirebase } from "../firestore";
 
   onMount(async () => {
     await initFirebase();
-    await firestore();
 
     firebase.auth().onAuthStateChanged((user) => {
       authStore.set({
