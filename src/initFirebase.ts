@@ -6,15 +6,12 @@ export async function initFirebase() {
     const fb: any = (await import("firebase/app")).default;
     await import("firebase/auth");
     await import("firebase/firestore");
-    console.log("here here");
-    debugger;
     fb.initializeApp(firebaseConfig);
     return;
   }
 
   const fb: any = await import("firebase");
   if (fb.apps.length == 0) {
-    console.log("here here");
     fb.initializeApp(firebaseConfig);
     return;
   }
