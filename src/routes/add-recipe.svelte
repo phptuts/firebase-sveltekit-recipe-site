@@ -13,6 +13,7 @@
     Label,
     Alert,
   } from "sveltestrap/src";
+  import { createRecipe } from "../db";
 
   const schema = yup.object().shape({
     title: yup.string().required().min(4).max(50),
@@ -25,7 +26,7 @@
       .of(
         yup.object().shape({
           name: yup.string().required().min(2).max(10),
-          unit: yup.mixed().oneOf(["none", "ounces", "cups", "pounds"]),
+          units: yup.mixed().oneOf(["none", "ounces", "cups", "pounds"]),
           amount: yup.number().required().min(1).max(30000),
         })
       ),
@@ -44,8 +45,14 @@
       ],
     },
     validationSchema: schema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values));
+    onSubmit: async (values) => {
+      try {
+        await createRecipe(values, $authStore.user.uid);
+        alert("Saved Recipe");
+      } catch (e) {
+        alert("error saving");
+        console.log(e);
+      }
     },
   });
 
@@ -160,8 +167,8 @@
           on:change={handleChange}
           bind:value={$form.ingredients[i].units}
           type="select"
-          name={`ingredients[${i}][amount]`}
-          id={`ingredients[${i}][amount]`}
+          name={`ingredients[${i}][units]`}
+          id={`ingredients[${i}][units]`}
         >
           <option>None</option>
           <option>Pounds</option>
