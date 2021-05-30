@@ -46,6 +46,7 @@
     },
     validationSchema: schema,
     onSubmit: async (values) => {
+      alert("here here");
       try {
         await createRecipe(values, $authStore.user.uid);
         alert("Saved Recipe");
@@ -144,15 +145,15 @@
   <Row>
     <Col sm={5}>
       <FormGroup>
-        <Label for={`ingredients[${i}][name]`}>Name</Label>
+        <Label for={`ingredients_${i}_name`}>Name</Label>
         <Input
           on:change={handleChange}
-          bind:value={$form.ingredients[i].name}
+          bind:value={$form.ingredients[i]["name"]}
           invalid={$errors.ingredients[i]["name"] &&
             $errors.ingredients[i]["name"].length > 0}
           type="text"
-          name={`ingredients[${i}][name]`}
-          id={`ingredients[${i}][name]`}
+          name={`ingredients[${i}].name`}
+          id={`ingredients_${i}_name`}
           placeholder="Name"
         />
         {#if $errors.ingredients[i]["name"]}
@@ -162,25 +163,25 @@
     </Col>
     <Col sm={4}>
       <FormGroup>
-        <Label for={`ingredients[${i}][units]`}>Units</Label>
+        <Label for={`ingredients_${i}_units`}>Units</Label>
         <Input
           on:change={handleChange}
-          bind:value={$form.ingredients[i].units}
+          bind:value={$form.ingredients[i]["units"]}
           type="select"
-          name={`ingredients[${i}][units]`}
-          id={`ingredients[${i}][units]`}
+          name={`ingredients[${i}].units`}
+          id={`ingredients_${i}_units`}
         >
-          <option>None</option>
-          <option>Pounds</option>
-          <option>Ounces</option>
-          <option>Cups</option>
+          <option value="none">None</option>
+          <option value="pounds">Pounds</option>
+          <option value="ounces">Ounces</option>
+          <option value="cups">Cups</option>
         </Input>
       </FormGroup>
     </Col>
 
     <Col sm={2}>
       <FormGroup>
-        <Label for={`ingredients[${i}][amount]`}>Amount</Label>
+        <Label for={`ingredients_${i}_amount`}>Amount</Label>
         <Input
           on:change={handleChange}
           bind:value={$form.ingredients[i]["amount"]}
@@ -189,8 +190,8 @@
           type="number"
           min="1"
           max="300000"
-          name={`ingredients[${i}][amount]`}
-          id={`ingredients[${i}][amount]`}
+          name={`ingredients[${i}]amount`}
+          id={`ingredients_${i}_amount`}
         />
         {#if $errors.ingredients[i]["amount"]}
           <div class="invalid-feedback">{$errors.ingredients[i]["amount"]}</div>
