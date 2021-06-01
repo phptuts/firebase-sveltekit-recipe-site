@@ -46,7 +46,6 @@
     },
     validationSchema: schema,
     onSubmit: async (values) => {
-      alert("here here");
       try {
         await createRecipe(values, $authStore.user.uid);
         alert("Saved Recipe");
