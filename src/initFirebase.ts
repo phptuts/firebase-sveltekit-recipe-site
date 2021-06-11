@@ -6,7 +6,10 @@ export async function initFirebase() {
     const fb: any = (await import("firebase/app")).default;
     await import("firebase/auth");
     await import("firebase/firestore");
-    fb.initializeApp(firebaseConfig);
+    await import("firebase/storage");
+    if (fb.apps.length == 0) {
+      fb.initializeApp(firebaseConfig);
+    }
     return;
   }
 
