@@ -23,7 +23,14 @@ export type RecipeForm = {
   mainPicture: File;
 };
 
-export const createRecipe = async (recipeForm: RecipeForm, userId: string) => {
+export type RecipeFormEdit = {
+    title: string;
+    description: string;
+    ingredients: Ingredient[];
+    mainPicture?: File;
+  };
+
+export const saveRecipe = async (recipeForm: RecipeForm, userId: string, recipeId?: string) => {
   const recipe: Recipe = {
     title: recipeForm.title,
     description: recipeForm.description,
@@ -32,14 +39,32 @@ export const createRecipe = async (recipeForm: RecipeForm, userId: string) => {
     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
   };
-  const db = await firestore();
-  const recipeRef = await db.collection("recipes").add(recipe);
-  const path = await uploadFile(recipeRef.id, userId, recipeForm.mainPicture);
-  const url = await getUrl(path);
-  recipeRef.update("picture", url);
 
-  return recipeRef;
+  const db = await firestore();
+  if (recipeId) {
+    const recipeRef =  await db.collection("recipes").add(recipe);
+    recipeId = recipeRef.id;
+  } else {
+    db.collection("recipes").doc(recipeId).set(recipe);
+  }
+
+  if (recipeForm.mainPicture) {
+    const path = await uploadFile(recipeId, userId, recipeForm.mainPicture);
+    const url = await getUrl(path);
+    db.collection("recipes").doc(recipeId).update("picture", url);
+  
+  }
+
+  return recipeId;
 };
+
+export const getRecipe = async (recipeId: string) => {
+    const db = await firestore();
+    const recipeRef = await db.collection("recipes").doc(recipeId).get();
+
+    return recipeRef.data();
+}
+
 
 const uploadFile = async (recipeId: string, userId: string, pic: File) => {
   const mainPicturePath = `/${userId}/${recipeId}.${pic.name.split(".").pop()}`;
