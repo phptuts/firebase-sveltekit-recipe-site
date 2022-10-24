@@ -1,0 +1,12 @@
+diff --git a/package.json b/package.json
+index 726a0083cb89efdb9dc1517739d995214aa00c1c..a78e4d0b07aae7410004c31d8add2a8804ad3833 100644
+--- a/package.json
++++ b/package.json
+@@ -115,5 +115,6 @@
+     "rollup-plugin-visualizer": "^4.2.0",
+     "serve": "^11.3.2",
+     "typescript": "^4.1.5"
+-  }
++  },
++  "type": "module"
+ }

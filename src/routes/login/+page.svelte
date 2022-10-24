@@ -3,7 +3,7 @@
   import firebase from 'firebase/compat/app';
   import { goto } from '$app/navigation';
   import { onDestroy } from 'svelte';
-  import authStore from '../stores/authStore';
+  import authStore from '../../stores/authStore';
 
   async function loginWithGoogle() {
     try {

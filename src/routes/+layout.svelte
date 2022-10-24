@@ -1,12 +1,5 @@
 <script context="module" lang="ts">
-  import { initFirebase } from '../initFirebase';
 
-  export async function load({ page, fetch, session, context }) {
-    await initFirebase();
-    return {
-      props: {},
-    };
-  }
 </script>
 
 <script lang="ts">

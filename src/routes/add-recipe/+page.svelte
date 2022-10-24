@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
 
   import * as yup from "yup";
-  import "../yup";
+  import "../../yup";
   import { createForm } from "svelte-forms-lib";
   import {
     Row,
@@ -13,8 +13,8 @@
     Label,
     Alert,
   } from "sveltestrap/src";
-  import authStore from "../stores/authStore";
-  import { createRecipe } from "../db";
+  import authStore from "../../stores/authStore";
+  import { createRecipe } from "../../db";
 
   const schema = yup.object().shape({
     title: yup.string().required().min(4).max(50),
