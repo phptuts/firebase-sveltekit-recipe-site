@@ -17,7 +17,7 @@
   "dependencies": {
     "firebase": "^8.6.1",
     "svelte-forms-lib": "^1.10.3",
-    "sveltestrap": "^5.0.2",
-    "yup": "^0.32.9"
+    "sveltestrap": "^5.9.0",
+    "yup": "^0.32.11"
   }
 }
