@@ -4,3 +4,5 @@ node_modules
 /build
 /functions
 /video*
+.yarn/cache
+.yarn/install-state.gz
