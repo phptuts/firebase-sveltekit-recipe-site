@@ -14,6 +14,7 @@
     firebase.auth().onAuthStateChanged((user) => {
       authStore.set({
         isLoggedIn: user !== null,
+         // @ts-ignore:
         user,
         firebaseControlled: true,
       });

@@ -1,6 +1,7 @@
 import { initFirebase } from '../initFirebase';
+import type { LayoutLoad } from './$types';
 
-export async function load({ page, fetch, context }) {
-  await initFirebase();
+export const load: LayoutLoad =  async () => {
+  initFirebase();
   return {};
 }
