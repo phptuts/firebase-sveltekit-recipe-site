@@ -11,8 +11,8 @@
 
 <script lang="ts">
   import { Container } from 'sveltestrap';
-  import firebase from 'firebase/app';
-  import 'firebase/auth';
+  import firebase from 'firebase/compat/app';
+  import 'firebase/compat/auth';
   import { onMount } from 'svelte';
   import authStore from '../stores/authStore';
   import NavBar from '../components/NavBar.svelte';

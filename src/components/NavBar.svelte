@@ -9,7 +9,7 @@
     NavLink,
   } from 'sveltestrap/src';
   import authStore from '../stores/authStore';
-  import firebase from 'firebase/app';
+  import firebase from 'firebase/compat/app';
 
   let isOpen = false;
 

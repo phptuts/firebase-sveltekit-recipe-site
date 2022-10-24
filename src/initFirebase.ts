@@ -1,21 +1,15 @@
 import firebaseConfig from "./env";
+import { initializeApp, getApp } from "firebase/app"; 
 
-export async function initFirebase() {
-  if (typeof window !== "undefined") {
-    // You need to use firebase/app for the client side
-    const fb: any = (await import("firebase/app")).default;
-    await import("firebase/auth");
-    await import("firebase/firestore");
-    await import("firebase/storage");
-    if (fb.apps.length == 0) {
-      fb.initializeApp(firebaseConfig);
-    }
-    return;
-  }
+import type { FirebaseApp } from "firebase/app";
+import firebase from "firebase/compat/app"
 
-  const fb: any = await import("firebase");
-  if (fb.apps.length == 0) {
-    fb.initializeApp(firebaseConfig);
-    return;
+export function initFirebase() {
+  let fb: FirebaseApp
+  try {
+    fb = getApp();
+  } catch {
+    fb = firebase.initializeApp(firebaseConfig)
   }
+  return fb
 }

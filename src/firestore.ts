@@ -1,4 +1,4 @@
-import type firebase from "firebase/app";
+import type firebase from "firebase/compat/app";
 
 let db: firebase.firestore.Firestore = null;
 
@@ -9,12 +9,12 @@ export async function firestore(): Promise<firebase.firestore.Firestore> {
 
   // Checks for the client
   if (typeof window !== "undefined") {
-    const fb: any = (await import("firebase/app")).default;
+    const fb: any = (await import("firebase/compat/app")).default;
 
     db = fb.firestore();
     return db;
   }
 
-  const fb: any = await import("firebase");
+  const fb: any = await import("firebase/compat");
   return fb.apps[0].firestore() as firebase.firestore.Firestore;
 }
