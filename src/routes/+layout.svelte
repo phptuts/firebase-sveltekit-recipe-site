@@ -1,5 +1,4 @@
 <script context="module" lang="ts">
-
 </script>
 
 <script lang="ts">
@@ -14,9 +13,8 @@
     firebase.auth().onAuthStateChanged((user) => {
       authStore.set({
         isLoggedIn: user !== null,
-         // @ts-ignore:
         user,
-        firebaseControlled: true,
+        firebaseControlled: true
       });
     });
   });

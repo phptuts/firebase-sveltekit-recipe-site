@@ -1,20 +1,12 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
+  import { goto } from '$app/navigation';
 
-  import * as yup from "yup";
-  import "../../yup";
-  import { createForm } from "svelte-forms-lib";
-  import {
-    Row,
-    Col,
-    Button,
-    FormGroup,
-    Input,
-    Label,
-    Alert,
-  } from "sveltestrap/src";
-  import authStore from "../../stores/authStore";
-  import { createRecipe } from "../../db";
+  import * as yup from 'yup';
+  import '../../yup';
+  import { createForm } from 'svelte-forms-lib';
+  import { Row, Col, Button, FormGroup, Input, Label, Alert } from 'sveltestrap/src';
+  import authStore from '../../stores/authStore';
+  import { createRecipe } from '../../db';
 
   const schema = yup.object().shape({
     title: yup.string().required().min(4).max(50),
@@ -26,60 +18,59 @@
       .of(
         yup.object().shape({
           name: yup.string().required().min(2).max(10),
-          units: yup.mixed().oneOf(["none", "ounces", "cups", "pounds"]),
-          amount: yup.number().min(1).max(30000),
+          units: yup.mixed().oneOf(['none', 'ounces', 'cups', 'pounds']),
+          amount: yup.number().min(1).max(30000)
         })
       ),
     mainPicture: yup
       .mixed()
-      .required("Picture Required")
+      .required('Picture Required')
       .fileMax({
         maxBytes: 50000,
-        message: "Max Image size is 50MB",
+        message: 'Max Image size is 50MB'
       })
       .fileFormat({
-        formats: ["image/gif", "image/jpeg", "image/png"],
-        message: "Images can only be png, gif, jpg",
-      }),
+        formats: ['image/gif', 'image/jpeg', 'image/png'],
+        message: 'Images can only be png, gif, jpg'
+      })
   });
 
-  const { form, errors, handleChange, handleSubmit, updateValidateField } =
-    createForm({
-      initialValues: {
-        title: "",
-        description: "",
-        ingredients: [
-          {
-            name: "",
-            units: "none",
-            amount: 1,
-          },
-        ],
-        mainPicture: null,
-      },
-      validationSchema: schema,
-      onSubmit: async (values) => {
-        try {
-          await createRecipe(values, $authStore.user.uid);
-          alert("Saved Recipe");
-        } catch (e) {
-          alert("error saving");
-          console.log(e);
+  const { form, errors, handleChange, handleSubmit, updateValidateField } = createForm({
+    initialValues: {
+      title: '',
+      description: '',
+      ingredients: [
+        {
+          name: '',
+          units: 'none',
+          amount: 1
         }
-      },
-    });
+      ],
+      mainPicture: null
+    },
+    validationSchema: schema,
+    onSubmit: async (values) => {
+      try {
+        await createRecipe(values, $authStore.user.uid);
+        alert('Saved Recipe');
+      } catch (e) {
+        alert('error saving');
+        console.log(e);
+      }
+    }
+  });
 
   const addIngredient = () => {
     $form.ingredients = $form.ingredients.concat({
-      name: "",
-      units: "none",
-      amount: 1,
+      name: '',
+      units: 'none',
+      amount: 1
     });
 
     $errors.ingredients = $errors.ingredients.concat({
-      name: "",
-      units: "",
-      amount: "",
+      name: '',
+      units: '',
+      amount: ''
     });
   };
 
@@ -90,7 +81,7 @@
 
   authStore.subscribe(async ({ isLoggedIn, firebaseControlled }) => {
     if (!isLoggedIn && firebaseControlled) {
-      await goto("/login");
+      await goto('/login');
     }
   });
 </script>
@@ -145,7 +136,7 @@
     <FormGroup>
       <Label for="title">Main Picture</Label>
       <Input
-        on:change={(e) => updateValidateField("mainPicture", e.target.files[0])}
+        on:change={(e) => updateValidateField('mainPicture', e.target.files[0])}
         invalid={$errors.mainPicture.length > 0}
         type="file"
         name="mainPicture"
@@ -163,12 +154,10 @@
     <h2>Ingredients</h2>
   </Col>
   <Col>
-    <Button on:click={addIngredient} class="float-end" color="primary"
-      >Add Ingredient</Button
-    >
+    <Button on:click={addIngredient} class="float-end" color="primary">Add Ingredient</Button>
   </Col>
 </Row>
-{#if typeof $errors.ingredients === "string" && !$errors.ingredients.includes("[object")}
+{#if typeof $errors.ingredients === 'string' && !$errors.ingredients.includes('[object')}
   <Alert color="danger">{$errors.ingredients}</Alert>
 {/if}
 {#each $form.ingredients as ingredient, i}
@@ -178,17 +167,17 @@
         <Label for={`ingredients_${i}_name`}>Name</Label>
         <Input
           on:change={handleChange}
-          bind:value={$form.ingredients[i]["name"]}
+          bind:value={$form.ingredients[i]['name']}
           invalid={$errors.ingredients[i] &&
-            $errors.ingredients[i]["name"] &&
-            $errors.ingredients[i]["name"].length > 0}
+            $errors.ingredients[i]['name'] &&
+            $errors.ingredients[i]['name'].length > 0}
           type="text"
           name={`ingredients[${i}].name`}
           id={`ingredients_${i}_name`}
           placeholder="Name"
         />
-        {#if $errors.ingredients[i] && $errors.ingredients[i]["name"]}
-          <div class="invalid-feedback">{$errors.ingredients[i]["name"]}</div>
+        {#if $errors.ingredients[i] && $errors.ingredients[i]['name']}
+          <div class="invalid-feedback">{$errors.ingredients[i]['name']}</div>
         {/if}
       </FormGroup>
     </Col>
@@ -197,7 +186,7 @@
         <Label for={`ingredients_${i}_units`}>Units</Label>
         <Input
           on:change={handleChange}
-          bind:value={$form.ingredients[i]["units"]}
+          bind:value={$form.ingredients[i]['units']}
           type="select"
           name={`ingredients[${i}].units`}
           id={`ingredients_${i}_units`}
@@ -215,18 +204,18 @@
         <Label for={`ingredients_${i}_amount`}>Amount</Label>
         <Input
           on:change={handleChange}
-          bind:value={$form.ingredients[i]["amount"]}
+          bind:value={$form.ingredients[i]['amount']}
           invalid={$errors.ingredients[i] &&
-            $errors.ingredients[i]["amount"] &&
-            $errors.ingredients[i]["amount"].length > 0}
+            $errors.ingredients[i]['amount'] &&
+            $errors.ingredients[i]['amount'].length > 0}
           type="number"
           min="1"
           max="300000"
           name={`ingredients[${i}]amount`}
           id={`ingredients_${i}_amount`}
         />
-        {#if $errors.ingredients[i] && $errors.ingredients[i]["amount"]}
-          <div class="invalid-feedback">{$errors.ingredients[i]["amount"]}</div>
+        {#if $errors.ingredients[i] && $errors.ingredients[i]['amount']}
+          <div class="invalid-feedback">{$errors.ingredients[i]['amount']}</div>
         {/if}
       </FormGroup>
     </Col>
@@ -238,8 +227,7 @@
 
 <Row>
   <Col>
-    <Button on:click={handleSubmit} class="w-100" color="success">Submit</Button
-    >
+    <Button on:click={handleSubmit} class="w-100" color="success">Submit</Button>
   </Col>
 </Row>
 <Row>

@@ -6,7 +6,7 @@
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
+    NavLink
   } from 'sveltestrap/src';
   import authStore from '../stores/authStore';
   import firebase from 'firebase/compat/app';

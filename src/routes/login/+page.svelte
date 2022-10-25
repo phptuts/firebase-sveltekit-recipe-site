@@ -36,6 +36,7 @@
   <Col>
     <img
       on:click={loginWithGoogle}
+      on:keypress={loginWithGoogle}
       src="/login-with-google.png"
       alt="Login With Google"
     />

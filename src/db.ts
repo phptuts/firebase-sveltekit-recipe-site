@@ -1,5 +1,5 @@
-import firebase from "firebase/app";
-import { firestore } from "./firestore";
+import firebase from 'firebase/app';
+import { firestore } from './firestore';
 
 export type Ingredient = {
   name: string;
@@ -30,19 +30,19 @@ export const createRecipe = async (recipeForm: RecipeForm, userId: string) => {
     ingredients: recipeForm.ingredients,
     userId,
     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
   };
   const db = await firestore();
-  const recipeRef = await db.collection("recipes").add(recipe);
+  const recipeRef = await db.collection('recipes').add(recipe);
   const path = await uploadFile(recipeRef.id, userId, recipeForm.mainPicture);
   const url = await getUrl(path);
-  recipeRef.update("picture", url);
+  recipeRef.update('picture', url);
 
   return recipeRef;
 };
 
 const uploadFile = async (recipeId: string, userId: string, pic: File) => {
-  const mainPicturePath = `/${userId}/${recipeId}.${pic.name.split(".").pop()}`;
+  const mainPicturePath = `/${userId}/${recipeId}.${pic.name.split('.').pop()}`;
   const storage = firebase.storage();
   const ref = storage.ref(mainPicturePath);
   await ref.put(pic);
