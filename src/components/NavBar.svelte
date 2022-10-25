@@ -9,13 +9,14 @@
     NavLink
   } from 'sveltestrap/src';
   import authStore from '../stores/authStore';
-  import firebase from 'firebase/compat/app';
+
+  import { getAuth, signOut } from 'firebase/auth';
 
   let isOpen = false;
 
   // handles the logout of
   async function logout() {
-    await firebase.auth().signOut();
+    signOut(getAuth());
   }
 </script>
 

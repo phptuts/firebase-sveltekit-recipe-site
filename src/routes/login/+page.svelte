@@ -1,15 +1,16 @@
 <script lang="ts">
   import { Row, Col } from 'sveltestrap';
-  import firebase from 'firebase/compat/app';
   import { goto } from '$app/navigation';
   import { onDestroy } from 'svelte';
   import authStore from '../../stores/authStore';
 
+  import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+
   async function loginWithGoogle() {
     try {
-      const provider = new firebase.auth.GoogleAuthProvider();
-
-      await firebase.auth().signInWithPopup(provider);
+      const provider = new GoogleAuthProvider();
+      const auth = getAuth();
+      await signInWithPopup(auth, provider);
     } catch (e) {
       console.log(e);
     }

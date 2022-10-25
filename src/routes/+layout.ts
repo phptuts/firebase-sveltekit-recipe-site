@@ -1,7 +1,8 @@
-import { initFirebase } from '../initFirebase';
+import firebaseApp from '$lib/firebase/app';
 import type { LayoutLoad } from './$types';
 
 export const load: LayoutLoad = async () => {
-  initFirebase();
-  return {};
+  return {
+    app: firebaseApp
+  };
 };

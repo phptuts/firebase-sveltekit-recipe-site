@@ -1,29 +1,27 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
 
-  import * as yup from 'yup';
+  import {object, string, mixed, array, number } from 'yup';
   import '../../yup';
   import { createForm } from 'svelte-forms-lib';
   import { Row, Col, Button, FormGroup, Input, Label, Alert } from 'sveltestrap/src';
   import authStore from '../../stores/authStore';
   import { createRecipe } from '../../db';
 
-  const schema = yup.object().shape({
-    title: yup.string().required().min(4).max(50),
-    description: yup.string().required().min(10).max(1000),
-    ingredients: yup
-      .array()
+  const schema = object().shape({
+    title: string().required().min(4).max(50),
+    description: string().required().min(10).max(1000),
+    ingredients: array()
       .min(1)
       .max(10)
       .of(
-        yup.object().shape({
-          name: yup.string().required().min(2).max(10),
-          units: yup.mixed().oneOf(['none', 'ounces', 'cups', 'pounds']),
-          amount: yup.number().min(1).max(30000)
+        object().shape({
+          name: string().required().min(2).max(10),
+          units: mixed().oneOf(['none', 'ounces', 'cups', 'pounds']),
+          amount: number().min(1).max(30000)
         })
       ),
-    mainPicture: yup
-      .mixed()
+    mainPicture: mixed()
       .required('Picture Required')
       .fileMax({
         maxBytes: 50000,
